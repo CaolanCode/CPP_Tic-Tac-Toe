@@ -9,15 +9,26 @@ void createBoard(char (&fullBoard)[11][11]);
 void printBoard(char (&fullBoard)[11][11]);
 void updateBoard(char (&fullBoard)[11][11], char (&choices)[9]);
 void checkWinner(char (&choices)[9]);
+void getChoice(int &pick, char (&choices)[9], char &player);
+void changePlayer(char &player);
 
 int main()
 {
     char fullBoard[11][11];
     char choices[] = {'1','2','3','4','5','6','7','8','9'};
-    
+    bool winner = false;
+    int pick;
+    char player = 'X';
     createBoard(fullBoard);
-    updateBoard(fullBoard, choices);
-    printBoard(fullBoard);
+    
+    do
+    {
+        updateBoard(fullBoard, choices);
+        printBoard(fullBoard);
+        getChoice(pick, choices, player);
+        changePlayer(player);
+        
+    }while(!winner);
     
     return 0;
 }
@@ -71,4 +82,21 @@ void checkWinner(char (&choices)[9])
     else if(choices[0] == choices[4] && choices[4] == choices[8] && choices[8] != ' ') cout << choices[8] << " is the winner!";
     else if(choices[2] == choices[4] && choices[4] == choices[6] && choices[2] != ' ') cout << choices[2] << " is the winner!";
     
+}
+
+void getChoice(int &pick, char (&choices)[9], char &player)
+{
+    do
+    {
+        cout << "\nChoose the position between 1-9: ";
+        cin >> pick;
+        if(pick < 1 || pick > 9) cout << "\nIncorrect choice\n";
+        else choices[pick-1] = player;
+    }while(pick < 1 || pick > 9);
+}
+
+void changePlayer(char &player)
+{
+    if(player == 'X') player = 'O';
+    else player = 'X';
 }
