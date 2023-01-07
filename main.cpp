@@ -19,21 +19,23 @@ int main()
     bool winner = false;
     int pick;
     char player = 'O';
+    int counter = 0;
     createBoard(fullBoard);
     
-    while(!winner)
+    while(counter < 9 && !winner)
     {
         changePlayer(player);
         updateBoard(fullBoard, choices);
         printBoard(fullBoard);
         getChoice(pick, choices, player);
         checkWinner(choices, winner);
+        counter++;
     }
     
     updateBoard(fullBoard, choices);
     printBoard(fullBoard);
     if(winner) cout << "\nPlayer " << player << " wins!\n";
-    else cout << "Draw!";
+    else cout << "\nResult is a draw!\n";
     
     return 0;
 }
@@ -91,9 +93,10 @@ void checkWinner(char (&choices)[9], bool &winner)
 
 void getChoice(int &pick, char (&choices)[9], char &player)
 {
+    cout << "\nPlayer " << player << ".\n";
     do
     {
-        cout << "\nChoose the position between 1-9: ";
+        cout << "Choose the position between 1-9: ";
         cin >> pick;
         if(pick < 1 || pick > 9) cout << "\nIncorrect choice\n";
         else choices[pick-1] = player;
