@@ -1,1 +1,3 @@
-# CPP_Tic-Tac-Toe
+# Tic-Tac-Toe in C++
+
+Terminal based game
