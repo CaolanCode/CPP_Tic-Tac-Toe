@@ -8,7 +8,7 @@ using namespace std;
 void createBoard(char (&fullBoard)[11][11]);
 void printBoard(char (&fullBoard)[11][11]);
 void updateBoard(char (&fullBoard)[11][11], char (&choices)[9]);
-void checkWinner(char (&choices)[9]);
+void checkWinner(char (&choices)[9], bool &winner);
 void getChoice(int &pick, char (&choices)[9], char &player);
 void changePlayer(char &player);
 
@@ -18,17 +18,22 @@ int main()
     char choices[] = {'1','2','3','4','5','6','7','8','9'};
     bool winner = false;
     int pick;
-    char player = 'X';
+    char player = 'O';
     createBoard(fullBoard);
     
-    do
+    while(!winner)
     {
+        changePlayer(player);
         updateBoard(fullBoard, choices);
         printBoard(fullBoard);
         getChoice(pick, choices, player);
-        changePlayer(player);
-        
-    }while(!winner);
+        checkWinner(choices, winner);
+    }
+    
+    updateBoard(fullBoard, choices);
+    printBoard(fullBoard);
+    if(winner) cout << "\nPlayer " << player << " wins!\n";
+    else cout << "Draw!";
     
     return 0;
 }
@@ -71,16 +76,16 @@ void updateBoard(char (&fullBoard)[11][11], char (&choices)[9])
     }
 }
 
-void checkWinner(char (&choices)[9])
+void checkWinner(char (&choices)[9], bool &winner)
 {
-    if(choices[0] == choices[1] && choices[1] == choices[2] && choices[0] != ' ') cout << choices[0] << " is the winner!";
-    else if(choices[3] == choices[4] && choices[4] == choices[5] && choices[3] != ' ') cout << choices[3] << " is the winner!";
-    else if(choices[6] == choices[7] && choices[7] == choices[8] && choices[6] != ' ') cout << choices[6] << " is the winner!";
-    else if(choices[0] == choices[3] && choices[3] == choices[6] && choices[6] != ' ') cout << choices[6] << " is the winner!";
-    else if(choices[1] == choices[4] && choices[4] == choices[7] && choices[1] != ' ') cout << choices[1] << " is the winner!";
-    else if(choices[2] == choices[5] && choices[5] == choices[8] && choices[2] != ' ') cout << choices[2] << " is the winner!";
-    else if(choices[0] == choices[4] && choices[4] == choices[8] && choices[8] != ' ') cout << choices[8] << " is the winner!";
-    else if(choices[2] == choices[4] && choices[4] == choices[6] && choices[2] != ' ') cout << choices[2] << " is the winner!";
+    if(choices[0] == choices[1] && choices[1] == choices[2] && choices[0] != ' ') winner = true;
+    else if(choices[3] == choices[4] && choices[4] == choices[5] && choices[3] != ' ') winner = true;
+    else if(choices[6] == choices[7] && choices[7] == choices[8] && choices[6] != ' ') winner = true;
+    else if(choices[0] == choices[3] && choices[3] == choices[6] && choices[6] != ' ') winner = true;
+    else if(choices[1] == choices[4] && choices[4] == choices[7] && choices[1] != ' ') winner = true;
+    else if(choices[2] == choices[5] && choices[5] == choices[8] && choices[2] != ' ') winner = true;
+    else if(choices[0] == choices[4] && choices[4] == choices[8] && choices[8] != ' ') winner = true;
+    else if(choices[2] == choices[4] && choices[4] == choices[6] && choices[2] != ' ') winner = true;
     
 }
 
