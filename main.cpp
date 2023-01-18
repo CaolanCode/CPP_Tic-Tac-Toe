@@ -4,7 +4,9 @@
 
 #include <iostream>
 #include <ctype.h>
-using namespace std;
+using std::cout;
+using std::endl;
+using std::cin;
 
 void createBoard(char (&fullBoard)[11][11]);
 void printBoard(char (&fullBoard)[11][11]);
